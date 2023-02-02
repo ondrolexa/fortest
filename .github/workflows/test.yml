@@ -20,6 +20,7 @@ jobs:
     - shell: msys2 {0}
       run: |
         mingw32-make.exe -C src -f WINDOWS_makefile
+        mkdir binary
         find src/ -executable -type f -exec cp {} binary \;
         tar -pczf Perple_X_Windows_64_gfortran.tar.gz binary datafiles optionfiles matlab_scripts
 
