@@ -22,9 +22,9 @@ jobs:
         mingw32-make.exe -C src -f WINDOWS_makefile
         mkdir binary
         find src/ -executable -type f -exec cp {} binary \;
-        tar -pczf Perple_X_Windows_64_gfortran.tar.gz binary datafiles optionfiles matlab_scripts
+        zip -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
 
     - uses: actions/upload-artifact@v3
       with:
-        name: Perple_X_Windows_64_gfortran.tar.gz
-        path: Perple_X_Windows_64_gfortran.tar.gz
+        name: Perple_X_Windows_64_gfortran.zip
+        path: Perple_X_Windows_64_gfortran.zip
