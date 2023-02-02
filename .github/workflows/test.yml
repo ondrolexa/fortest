@@ -15,14 +15,14 @@ jobs:
       with:
         msystem: UCRT64
         update: true
-        install:  mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc-fortran
+        install:  mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-7zip
 
     - shell: msys2 {0}
       run: |
         mingw32-make.exe -C src -f WINDOWS_makefile
         mkdir binary
         find src/ -executable -type f -exec cp {} binary \;
-        zip -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
+        7z.exe a -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
 
     - uses: actions/upload-artifact@v3
       with:
