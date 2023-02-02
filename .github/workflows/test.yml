@@ -11,10 +11,5 @@ jobs:
       uses: actions/checkout@v3
     - name: Install dependencies
       run: |
-        choco install mingw cmake
-        set PATH=%PATH%;C:\tools\mingw64\bin;C:\Program Files\CMake\bin
-        make -C src -f WINDOWS_makefile
-        mkdir binary
-        find src/ -executable -type f -exec cp {} binary \;
-        tar -pczf ${{ matrix.zip_name }}.tar.gz binary datafiles optionfiles matlab_scripts
+        cmake -S src/ -G "MinGW Makefiles" -Wdev
 
