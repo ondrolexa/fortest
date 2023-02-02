@@ -21,7 +21,7 @@ jobs:
     - name: Compiling binaries
       shell: msys2 {0}
       run: |
-        mingw64-make.exe -C src -f WINDOWS_makefile
+        mingw32-make.exe -C src -f WINDOWS_makefile
         mkdir binary
         find src/ -executable -type f -exec cp {} binary \;
         7z.exe a -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
