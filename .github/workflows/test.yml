@@ -11,20 +11,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - uses: msys2/setup-msys2@v2
+    - name: Setting up environment
+      uses: msys2/setup-msys2@v2
       with:
         msystem: UCRT64
         update: true
-        install:  mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-7zip
+        install:  mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-7zip
 
-    - shell: msys2 {0}
+    - name: Compiling binaries
+      shell: msys2 {0}
       run: |
         mingw32-make.exe -C src -f WINDOWS_makefile
         mkdir binary
         find src/ -executable -type f -exec cp {} binary \;
         7z.exe a -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
 
-    - uses: actions/upload-artifact@v3
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
       with:
         name: Perple_X_Windows_64_gfortran.zip
         path: Perple_X_Windows_64_gfortran.zip
