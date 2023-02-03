@@ -1,3 +1,5 @@
+
+
 name: Compilation testing
 
 on: [push, pull_request]
@@ -5,29 +7,24 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: windows-latest
-
+    runs-on: ubuntu-latest
     steps:
+
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setting up environment
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: UCRT64
-        update: true
-        install:  mingw-w64-ucrt-x86_64-make mingw-w64-ucrt-x86_64-gcc-fortran mingw-w64-ucrt-x86_64-7zip
-
-    - name: Compiling binaries
-      shell: msys2 {0}
+    - name: Install dependencies
       run: |
-        mingw32-make.exe -C src -f WINDOWS_makefile
-        mkdir binary
-        find src/ -executable -type f -exec cp {} binary \;
-        7z.exe a -r Perple_X_Windows_64_gfortran.zip binary datafiles optionfiles matlab_scripts
+        sudo apt update
+        sudo apt install -y gfortran
+
+    - name: Compile sources
+      run: |
+        make -k -C src -f LINUX_makefile | tee compilation_output.txt
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Perple_X_Windows_64_gfortran.zip
-        path: Perple_X_Windows_64_gfortran.zip
+        name: compilation_output.txt
+        path: compilation_output.txt
+
